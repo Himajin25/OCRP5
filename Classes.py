@@ -3,39 +3,8 @@ import requests
 import sys
 from os import system, name
 import time
-
-USER = "root"
-PASSWORD = "My5QL N1c0"
-DATABASE = "dbtest001"
-CATEGORIES = ["eaux de coco", "lait de coco", "huile de coco", "sablés à la noix de coco", "chips de noix de coco séchée", "farine de noix de coco séchée", "sucres de coco", "yaourts a la noix de coco"]
-TABLES = {}
-
-TABLES['Products'] = (
-    "CREATE TABLE IF NOT EXISTS `Products` ("
-    "  `id` SMALLINT NOT NULL AUTO_INCREMENT,"
-    "  `code` varchar(100) NOT NULL,"
-    "  `cat_name` varchar(40) NOT NULL,"
-    "  `name` varchar(100) NOT NULL,"
-    "  `brand` varchar(100) NOT NULL,"
-    "  `stores` varchar(100) NOT NULL,"
-    "  `nutri_grade` char(1) NOT NULL,"
-    "  `url` varchar(100) NOT NULL,"
-    "  PRIMARY KEY (`id`)"
-    ") ENGINE=INNODB")
-
-TABLES['Category'] = (
-    "CREATE TABLE IF NOT EXISTS `Category` ("
-	"   `id` SMALLINT NOT NULL,"
-	"   `name` varchar(100) NOT NULL,"
-	"   PRIMARY KEY (`id`)"
-    ") ENGINE=INNODB")
-
-TABLES['Favorites'] = (
-    "CREATE TABLE IF NOT EXISTS `Favorites` ("
-	"   `product_id` SMALLINT NOT NULL,"
-    "   PRIMARY KEY (`product_id`),"
-    "   CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES Products (id)"
-    ") ENGINE=INNODB")
+from constants import *
+from purecoco import purecoco
 
 main_menu = ['Search Product to Replace', 'View Saved Products']
 about_main_menu = "MENU NAME"
@@ -303,7 +272,7 @@ def products_menu(category_selection):
 
 def healthy_menu(product_selection):
     clear_screen()
-    show_healthier_products = purecoco .get_healthier_products(product_selection)
+    show_healthier_products = purecoco.get_healthier_products(product_selection)
     healthier_menu = Menu("HEALTHIER OPTIONS MENU", about_products_display, show_healthier_products)
     healthier_menu.display()
     if len(show_healthier_products) == 0:
@@ -370,13 +339,3 @@ def main():
     elif user_choice == 2:
         favorites_menu()
 
-purecoco = Database()
-purecoco.connect_to_server()
-purecoco.connect_to_database()
-purecoco.build_tables()
-data = purecoco.fetch_data()
-purecoco.populate_tables(data)
-program = 1
-while program:
-    main()
-purecoco.end_connection()
