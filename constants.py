@@ -1,3 +1,4 @@
+""" Constants used in the purcoco app """
 
 USER = input("Enter username : ")
 PASSWORD = input("Enter password : ")

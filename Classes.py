@@ -4,13 +4,17 @@ import sys
 from os import system, name
 import time
 from constants import *
-# from purcoco_launch import purcoco
+
+""" Classes, methods and functions used to build the purcoco app """
 
 
 main_menu = ['Search Product to Replace', 'View Saved Products']
 about_main_menu = "MENU NAME"
 about_categories_menu = "CATEGORY NAME"
 about_products_display = "('PRODUCT NAME', 'BRAND', 'NUTRISCORE', 'DATABASE ID')"
+
+
+""" This < Database > class handles all database operations """
 
 class Database:
 
@@ -25,6 +29,7 @@ class Database:
         self.database = DATABASE
 
     def connect_to_server(self):
+        """ This Methods connects to MySQL server while checking user name and password for errors  """
 
         try:
             config = {'user' : self.user, 'password' : self.password}
@@ -40,6 +45,8 @@ class Database:
             print(f'{self.user} connected succesfully to MYSQL and {DATABASE} database')
 
     def connect_to_database(self):
+        """ This methods connects to database and creates it if it doesn't exists """
+
         create_db_query = f"CREATE DATABASE IF NOT EXISTS {DATABASE} DEFAULT CHARACTER SET utf8mb4"
         use_db_query = f"USE {DATABASE}"
         try: 
@@ -55,6 +62,8 @@ class Database:
             print("changes committed")
         
     def build_tables(self):
+        """ This method build the tables from the TABLES dictionary in the constants.py file """
+
         for table_name in TABLES:
             if table_name is not 'Favorites':
                 self.cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
@@ -68,6 +77,8 @@ class Database:
             print('table {} created'.format(table_name))
     
     def fetch_data(self):
+        """ This method fetches the data for the tables from the openfood facts API """
+
         products_list_data = []
         for category in CATEGORIES:
             url= 'https://fr.openfoodfacts.org/cgi/search.pl?'
@@ -100,10 +111,12 @@ class Database:
 
                 else: 
                     products_list_data.append((code, cat_name, name, brand, stores, nutrition_grades, url))
-        print(products_list_data)
+                    
         return products_list_data
 
     def populate_tables(self, data):
+        """ This method uses the fetched data and inserts it in the tables """
+
         cat_data = list(enumerate(CATEGORIES, 1))
         feed_products_query = "INSERT IGNORE INTO Products (code, cat_name, name, brand, stores, nutri_grade, url) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         feed_categories_query =  "INSERT IGNORE INTO Category (id, name) VALUES (%s, %s)"
@@ -113,12 +126,15 @@ class Database:
         print('tables populating succesfully completed')
 
     def end_connection(self):
+        """ This method terminates the connection to the server and closes the cursor """
         self.cursor.close()
         self.connection.close()
         print('connection terminated')
     
     # @staticmethod
     def get_products_from_category(self, category_selection):
+        """ This method displays the products from the user selected category """
+
         show_products_query = "SELECT name, brand, nutri_grade, id FROM Products where cat_name = %s"
         show_products_params = (CATEGORIES[category_selection-1],)
         self.cursor.execute(show_products_query, show_products_params)
@@ -126,6 +142,8 @@ class Database:
         return products_selection
     
     def get_healthier_products(self, selected_product_id):
+        """ This method proposes healthier alternatives compared to the user selected product """
+
         product_nutri_category_query = "SELECT nutri_grade, cat_name FROM Products where id = %s"
         product_nutri_category_params = (selected_product_id,)
         self.cursor.execute(product_nutri_category_query, product_nutri_category_params)
@@ -142,12 +160,16 @@ class Database:
 
 
     def display_favorites(self):
+        """ This method displays the products saved by the user into the favorites table """
+
         display_favorites_query = "SELECT name, brand, nutri_grade, id FROM Products INNER JOIN Favorites ON Products.id = Favorites.product_id"
         self.cursor.execute(display_favorites_query)
         saved_items = self.cursor.fetchall()
         return saved_items
 
     def save_to_favorites(self, healthy_choice_id):
+        """ This method proposes to save selected product replacement to favorites table """
+
         save_to_favorites_query = "REPLACE into Favorites (product_id) SELECT id FROM Products where id = %s"
         save_to_favorites_params = (healthy_choice_id,)
         self.cursor.execute(save_to_favorites_query, save_to_favorites_params)
@@ -155,6 +177,8 @@ class Database:
         self.connection.commit()
 
     def erase_favorites(self):
+        """ This method allows for reset of favorites table """
+
         table = TABLES['Favorites']
         self.cursor.execute("DROP TABLE IF EXISTS Favorites")
         self.cursor.execute(table)
@@ -164,6 +188,8 @@ class Database:
 
 
 class Menu:
+    """ This class handles the user interface, allows for user to navigate menus """
+
     def __init__(self, title, about, options):
         self.title = title
         self.about = about 
@@ -171,6 +197,8 @@ class Menu:
         self.instructions = "HOW TO USE: Choose an option, enter its corresponding number and press Enter"
 
     def display(self):
+        """ This method handles the appearance of the different menus """
+
         print(" ", "_"*150)
         print("|"," "*150, "|")
         print("|", " "*55, f"<< {self.title} >>")
@@ -187,6 +215,8 @@ class Menu:
         print("|","_"*150, "|" )
 
     def user_input(self):
+        """ This method allows for the user to select elements from numbered lists by entering a number"""
+
         try :
             print()
             user_choice = int(input("What is your selection?\n( Enter 0 to navigate app ) \n"))
@@ -202,6 +232,8 @@ class Menu:
                 return user_choice
 
     def menu_navigation(self):
+        """ This method allows to return to main menu or quit the application when user enters '0' """
+
         clear_screen()
         print(" ", "_"*150)
         print("|"," "*150, "|")
@@ -228,16 +260,10 @@ class Menu:
             Menu.menu_navigation(self)
     
 
-print ("Always executed")
- 
-if __name__ == "__main__":
-    print ("Executed when invoked directly")
-else:
-    print ("Executed when imported")
-    
-
 
 def clear_screen():
+    """ This function clears the terminal screen upon change of menu """
+
     # for windows 
     if name == 'nt': 
         _ = system('cls') 
@@ -247,6 +273,8 @@ def clear_screen():
 
 
 def title_menu():
+    """ This function builds the main menu and handles user input """
+
     clear_screen()
     title_menu = Menu("MAIN MENU", about_main_menu, main_menu)
     title_menu.display()
@@ -254,6 +282,8 @@ def title_menu():
     return title_menu_selection
 
 def categories_menu():
+    """ This function builds the category menu and handles the user input """
+
     clear_screen()
     categories_menu = Menu("CATEGORIES MENU", about_categories_menu, CATEGORIES)
     categories_menu.display()
@@ -261,6 +291,8 @@ def categories_menu():
     return category_selection
 
 def products_menu(category_selection):
+    """ This function builds the products menu and handles user input """
+
     clear_screen()
     show_products = purcoco.get_products_from_category(category_selection)
     products_menu = Menu("PRODUCTS MENU",about_products_display, show_products)
@@ -271,6 +303,8 @@ def products_menu(category_selection):
     return selected_product_id
 
 def healthy_menu(product_selection):
+    """ This function builds the healthy alternatives menu and handles user input """
+
     clear_screen()
     show_healthier_products = purcoco.get_healthier_products(product_selection)
     healthier_menu = Menu("HEALTHIER OPTIONS MENU", about_products_display, show_healthier_products)
@@ -286,6 +320,7 @@ def healthy_menu(product_selection):
         return healthy_choice_id
 
 def save_to_favorites_menu(healthy_choice_id):
+    """ This function displays prompt for user to choose and confirm whether to save healthier product to favorites table """
 
     save_to_favorites_prompt = input("Save to your favorites?\n - Enter 'y' to add to favorites;\n - Enter 'n' to go back to selection;\n").lower()
     if save_to_favorites_prompt == "y":
@@ -297,6 +332,8 @@ def save_to_favorites_menu(healthy_choice_id):
         save_to_favorites_menu(healthy_choice_id)
 
 def favorites_menu():
+    """ This function builds the favorites menu and displays saved product to user """
+
     clear_screen()
     show_favorites = purcoco.display_favorites()
     favorites_menu_init= Menu('FAVORITES MENU', about_products_display, show_favorites)
@@ -305,6 +342,8 @@ def favorites_menu():
     favorites_menu_init.menu_navigation()
 
 def erase_favorites_prompt():
+    """ This function prompt the user to reset the favorites table """
+
     while True:
         erase_favorites_prompt = input("- enter 'e' to erase your saved products;\n- enter 'c' to continue:\n").lower()
         if erase_favorites_prompt == 'e':
@@ -327,27 +366,18 @@ def erase_favorites_prompt():
             pass
 
 def replace_item():
+    """ This function handles the prompts and inputs if user chooses to look for a porduct to replace """
+
     choosen_category = categories_menu()
     choosen_product = products_menu(choosen_category)
     choosen_replacement = healthy_menu(choosen_product)
     save_to_favorites_menu(choosen_replacement)
 
 def main():
+    """ This function is the main function to launch the user interface and start the program """
     user_choice = title_menu()
     if user_choice == 1:
         replace_item()
     elif user_choice == 2:
         favorites_menu()
-
-purcoco = Database()
-purcoco.connect_to_server()
-purcoco.connect_to_database()
-purcoco.build_tables()
-data = purcoco.fetch_data()
-purcoco.populate_tables(data)
-program = 1
-
-while program:
-    main()
-purcoco.end_connection()
 
