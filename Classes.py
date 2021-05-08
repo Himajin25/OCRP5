@@ -4,7 +4,8 @@ import sys
 from os import system, name
 import time
 from constants import *
-from purcoco import purcoco
+# from purcoco_launch import purcoco
+
 
 main_menu = ['Search Product to Replace', 'View Saved Products']
 about_main_menu = "MENU NAME"
@@ -261,7 +262,7 @@ def categories_menu():
 
 def products_menu(category_selection):
     clear_screen()
-    show_products = purcoco .get_products_from_category(category_selection)
+    show_products = purcoco.get_products_from_category(category_selection)
     products_menu = Menu("PRODUCTS MENU",about_products_display, show_products)
     products_menu.display()
     product_selection = products_menu.user_input()
@@ -297,7 +298,7 @@ def save_to_favorites_menu(healthy_choice_id):
 
 def favorites_menu():
     clear_screen()
-    show_favorites = purcoco .display_favorites()
+    show_favorites = purcoco.display_favorites()
     favorites_menu_init= Menu('FAVORITES MENU', about_products_display, show_favorites)
     favorites_menu_init.display()
     erase_favorites_prompt()
@@ -337,4 +338,16 @@ def main():
         replace_item()
     elif user_choice == 2:
         favorites_menu()
+
+purcoco = Database()
+purcoco.connect_to_server()
+purcoco.connect_to_database()
+purcoco.build_tables()
+data = purcoco.fetch_data()
+purcoco.populate_tables(data)
+program = 1
+
+while program:
+    main()
+purcoco.end_connection()
 

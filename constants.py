@@ -1,6 +1,6 @@
 
-USER = "student"
-PASSWORD = "ocr_purcoco"
+USER = input("Enter username : ")
+PASSWORD = input("Enter password : ")
 DATABASE = "PurcocoDB"
 CATEGORIES = ["eaux de coco", "lait de coco", "huile de coco", "yaourts a la noix de coco", "sablés à la noix de coco", "chips de noix de coco séchée", "farine de noix de coco séchée", "sucres de coco"]
 TABLES = {}
