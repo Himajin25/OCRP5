@@ -54,7 +54,6 @@ class Database:
             print("changes committed")
         
     def build_tables(self):
-        # with self.cursor as cursor:
         for table_name in TABLES:
             if table_name is not 'Favorites':
                 self.cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
