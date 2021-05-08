@@ -9,6 +9,7 @@ The database is build with products from OpenFoodFacts and organized in categori
 Prerequisite:
 
 -> Python 3.X 
+
 -> MySQL
 
 Installation :
