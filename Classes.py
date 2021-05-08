@@ -4,7 +4,7 @@ import sys
 from os import system, name
 import time
 from constants import *
-from purecoco import purecoco
+from purcoco import purcoco
 
 main_menu = ['Search Product to Replace', 'View Saved Products']
 about_main_menu = "MENU NAME"
@@ -262,7 +262,7 @@ def categories_menu():
 
 def products_menu(category_selection):
     clear_screen()
-    show_products = purecoco .get_products_from_category(category_selection)
+    show_products = purcoco .get_products_from_category(category_selection)
     products_menu = Menu("PRODUCTS MENU",about_products_display, show_products)
     products_menu.display()
     product_selection = products_menu.user_input()
@@ -272,7 +272,7 @@ def products_menu(category_selection):
 
 def healthy_menu(product_selection):
     clear_screen()
-    show_healthier_products = purecoco.get_healthier_products(product_selection)
+    show_healthier_products = purcoco.get_healthier_products(product_selection)
     healthier_menu = Menu("HEALTHIER OPTIONS MENU", about_products_display, show_healthier_products)
     healthier_menu.display()
     if len(show_healthier_products) == 0:
@@ -289,7 +289,7 @@ def save_to_favorites_menu(healthy_choice_id):
 
     save_to_favorites_prompt = input("Save to your favorites?\n - Enter 'y' to add to favorites;\n - Enter 'n' to go back to selection;\n").lower()
     if save_to_favorites_prompt == "y":
-        purecoco.save_to_favorites(healthy_choice_id)
+        purcoco.save_to_favorites(healthy_choice_id)
     elif save_to_favorites_prompt == "n":
         pass
     else :
@@ -298,7 +298,7 @@ def save_to_favorites_menu(healthy_choice_id):
 
 def favorites_menu():
     clear_screen()
-    show_favorites = purecoco .display_favorites()
+    show_favorites = purcoco .display_favorites()
     favorites_menu_init= Menu('FAVORITES MENU', about_products_display, show_favorites)
     favorites_menu_init.display()
     erase_favorites_prompt()
@@ -311,7 +311,7 @@ def erase_favorites_prompt():
             while True:
                 erase_favorites_confirmation = input("- You are about to erase your saved products\n - Enter 'y' to confirm\n - Enter 'n' to return to favorites\n").lower()
                 if erase_favorites_confirmation == 'y':
-                    purecoco.erase_favorites()
+                    purcoco.erase_favorites()
                     print("< Favorites > erased, resest completed")
                     return
                 elif erase_favorites_confirmation == 'n':
