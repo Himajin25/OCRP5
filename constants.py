@@ -1,7 +1,7 @@
 """ Constants used in the purcoco app """
 
-USER = input("Enter username : ")
-PASSWORD = input("Enter password : ")
+USER = 'root'
+PASSWORD = 'My5QL N1c0'
 DATABASE = "PurcocoDB"
 CATEGORIES = ["eaux de coco", "lait de coco", "huile de coco", "yaourts a la noix de coco", "sablés à la noix de coco", "chips de noix de coco séchée", "farine de noix de coco séchée", "sucres de coco"]
 TABLES = {}

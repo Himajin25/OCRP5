@@ -1,16 +1,10 @@
-from classes import *
+import utils
+import Database
 
-""" This is the main file. Run it in terminal to use app """
 
-purcoco = Database()
-purcoco.connect_to_server()
-purcoco.connect_to_database()
-purcoco.build_tables()
-data = purcoco.fetch_data()
-purcoco.populate_tables(data)
+purcoco = Database.Database()
 
 program = 1
 while program:
-    main()
+    utils.app()
     
-purcoco.end_connection()
