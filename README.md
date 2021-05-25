@@ -40,7 +40,9 @@ USE:
 
 RESET:
 
--> Simply rerun init.py to rebuild the database from scratch;
+-> Your saved items list can be reset from within the app;
+
+-> Simply rerun init.py to rebuild the whole database from scratch;
 
 
 
