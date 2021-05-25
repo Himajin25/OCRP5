@@ -1,8 +1,8 @@
 import utils
-import Database
+import database
 
 
-purcoco = Database.Database()
+purcoco = database.Database()
 
 program = 1
 while program:

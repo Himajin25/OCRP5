@@ -1,9 +1,9 @@
 from os import system, name
 import time
-import constants as c
+import config as c
 import menu
  
-from Database import Database
+from database import Database
 
 
 """ Classes, methods and functions used to build the purcoco app """
@@ -15,11 +15,11 @@ about_categories_menu = "CATEGORY NAME"
 about_products_display = "('PRODUCT NAME', 'BRAND', 'NUTRISCORE', 'DATABASE ID')"
 
 
-""" This < Database > class handles all database operations """
+
 
 
 def clear_screen():
-    """ This function clears the terminal screen upon change of menu """
+    """ Clears the terminal screen upon change of menu """
 
     # for windows 
     if name == 'nt': 
@@ -31,7 +31,7 @@ def clear_screen():
 
 
 def title_menu():
-    """ This function builds the main menu and handles user input """
+    """ Builds the main menu and handles user input """
 
     clear_screen()
     title_menu = menu.Menu("MAIN MENU", about_main_menu, main_menu)
@@ -40,7 +40,7 @@ def title_menu():
     return title_menu_selection
 
 def categories_menu():
-    """ This function builds the category menu and handles the user input """
+    """ Builds the category menu and handles the user input """
 
     clear_screen()
     categories_menu = menu.Menu("CATEGORIES MENU", about_categories_menu, c.CATEGORIES)
@@ -49,7 +49,7 @@ def categories_menu():
     return category_selection
 
 def products_menu(category_selection):
-    """ This function builds the products menu and handles user input """
+    """ Builds the products menu and handles user input """
 
     clear_screen()
     show_products = purcoco.get_products_from_category(category_selection)
@@ -61,7 +61,7 @@ def products_menu(category_selection):
     return selected_product_id
 
 def healthy_menu(product_selection):
-    """ This function builds the healthy alternatives menu and handles user input """
+    """ Builds the healthy alternatives menu and handles user input """
 
     clear_screen()
     show_healthier_products = purcoco.get_healthier_products(product_selection)
@@ -78,7 +78,7 @@ def healthy_menu(product_selection):
         return healthy_choice_id
 
 def save_to_favorites_menu(healthy_choice_id):
-    """ This function displays prompt for user to choose and confirm whether to save healthier product to favorites table """
+    """ Displays prompt for user to choose and confirm whether to save healthier product to favorites table """
 
     save_to_favorites_prompt = input("Save to your favorites?\n - Enter 'y' to add to favorites;\n - Enter 'n' to go back to selection;\n").lower()
     if save_to_favorites_prompt == "y":
@@ -90,7 +90,7 @@ def save_to_favorites_menu(healthy_choice_id):
         save_to_favorites_menu(healthy_choice_id)
 
 def favorites_menu():
-    """ This function builds the favorites menu and displays saved product to user """
+    """ Builds the favorites menu and displays saved product to user """
 
     clear_screen()
     show_favorites = purcoco.display_favorites()
@@ -100,7 +100,7 @@ def favorites_menu():
     favorites_menu_init.menu_navigation()
 
 def erase_favorites_prompt():
-    """ This function prompt the user to reset the favorites table """
+    """ Prompts the user to reset the favorites table """
 
     while True:
         erase_favorites_prompt = input("- enter 'e' to erase your saved products;\n- enter 'c' to continue:\n").lower()
@@ -124,7 +124,7 @@ def erase_favorites_prompt():
             pass
 
 def replace_item():
-    """ This function handles the prompts and inputs if user chooses to look for a porduct to replace """
+    """ Handles the prompts and inputs if user chooses to look for a porduct to replace """
 
     choosen_category = categories_menu()
     choosen_product = products_menu(choosen_category)
@@ -132,7 +132,7 @@ def replace_item():
     save_to_favorites_menu(choosen_replacement)
 
 def app():
-    """ This function is the main function to launch the user interface and start the program """
+    """ Launches the user interface and start the program """
     user_choice = title_menu()
     if user_choice == 1:
         replace_item()

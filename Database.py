@@ -1,13 +1,10 @@
-import constants as c
+import config as c
 from mysql.connector import connect, Error, errorcode
 import requests
 
 class Database:
+    """ Class that handles all database operations """
 
-    # user = None
-    # password = None
-    # connection = None
-    # cursor = None
 
     def __init__(self):
         self.user = c.USER
@@ -18,7 +15,7 @@ class Database:
         self.cursor = self.cnx.cursor(buffered=True)
 
     def connect_to_server(self):
-        """ This Methods connects to MySQL server while checking user name and password for errors  """
+        """ Connects to MySQL server while checking user name and password for errors  """
 
         try:
             config = {'user' : self.user, 'password' : self.password}
@@ -34,7 +31,7 @@ class Database:
             print(f'{self.user} connected succesfully to MYSQL and {c.DATABASE} database')
 
     def connect_to_database(self):
-        """ This methods connects to database and creates it if it doesn't exists """
+        """ Connects to database and creates it if it doesn't exists """
 
         create_db_query = f"CREATE DATABASE IF NOT EXISTS {c.DATABASE} DEFAULT CHARACTER SET utf8mb4"
         use_db_query = f"USE {c.DATABASE}"
@@ -51,13 +48,12 @@ class Database:
             print("changes committed")
         
     def build_tables(self):
-        """ This method build the tables from the TABLES dictionary in the constants.py file """
+        """ Build the tables from the TABLES dictionary in the constants.py file """
 
         for table_name in c.TABLES:
-            if table_name is not 'Favorites':
-                self.cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
-                self.cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
-                print(f"table {table_name} dropped")
+            self.cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
+            self.cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
+            print(f"table {table_name} dropped")
 
         for table_name in c.TABLES:
             self.cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
@@ -66,7 +62,7 @@ class Database:
             print('table {} created'.format(table_name))
     
     def fetch_data(self):
-        """ This method fetches the data for the tables from the openfood facts API """
+        """ Fetches the data for the tables from the openfood facts API """
 
         products_list_data = []
         for category in c.CATEGORIES:
@@ -104,7 +100,7 @@ class Database:
         return products_list_data
 
     def populate_tables(self, data):
-        """ This method uses the fetched data and inserts it in the tables """
+        """ Uses the fetched data and inserts it in the tables """
 
         cat_data = list(enumerate(c.CATEGORIES, 1))
         feed_products_query = "INSERT IGNORE INTO Products (code, cat_name, name, brand, stores, nutri_grade, url) VALUES (%s, %s, %s, %s, %s, %s, %s)"
@@ -118,7 +114,7 @@ class Database:
     
     # @staticmethod
     def get_products_from_category(self, category_selection):
-        """ This method displays the products from the user selected category """
+        """ Displays the products from the user selected category """
 
         show_products_query = "SELECT name, brand, nutri_grade, id FROM Products where cat_name = %s"
         show_products_params = (c.CATEGORIES[category_selection-1],)
@@ -127,7 +123,7 @@ class Database:
         return products_selection
     
     def get_healthier_products(self, selected_product_id):
-        """ This method proposes healthier alternatives compared to the user selected product """
+        """ Proposes healthier alternatives compared to the user selected product """
 
         product_nutri_category_query = "SELECT nutri_grade, cat_name FROM Products where id = %s"
         product_nutri_category_params = (selected_product_id,)
@@ -145,7 +141,7 @@ class Database:
 
 
     def display_favorites(self):
-        """ This method displays the products saved by the user into the favorites table """
+        """ Displays the products saved by the user into the favorites table """
 
         display_favorites_query = "SELECT name, brand, nutri_grade, id FROM Products INNER JOIN Favorites ON Products.id = Favorites.product_id"
         self.cursor.execute(display_favorites_query)
@@ -153,7 +149,7 @@ class Database:
         return saved_items
 
     def save_to_favorites(self, healthy_choice_id):
-        """ This method proposes to save selected product replacement to favorites table """
+        """ Proposes to save selected product replacement to favorites table """
 
         save_to_favorites_query = "REPLACE into Favorites (product_id) SELECT id FROM Products where id = %s"
         save_to_favorites_params = (healthy_choice_id,)
@@ -162,7 +158,7 @@ class Database:
         self.connection.commit()
 
     def erase_favorites(self):
-        """ This method allows for reset of favorites table """
+        """ Allows for reset of favorites table """
 
         table = c.TABLES['Favorites']
         self.cursor.execute("DROP TABLE IF EXISTS Favorites")
@@ -170,7 +166,7 @@ class Database:
         self.connection.commit()
         
     def end_connection(self):
-        """ This method terminates the connection to the server and closes the cursor """
+        """ Terminates the connection to the server and closes the cursor """
         self.cursor.close()
         self.connection.close()
         print('connection terminated')

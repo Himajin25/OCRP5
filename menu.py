@@ -3,7 +3,7 @@ import sys
 
 
 class Menu:
-    """ This class handles the user interface, allows for user to navigate menus """
+    """ Class that handles the user interface, allows for user to navigate menus """
 
     def __init__(self, title, about, options):
         self.title = title
@@ -18,7 +18,6 @@ class Menu:
         print("|"," "*150, "|")
         print("|", " "*55, f"<< {self.title} >>")
         print("|", " "*30, f"{self.instructions}")
-        #print("|"," "*100, "|")
         print("|", "_"*150, "|")
         print("|", " "*150, "|")
         print("|", "0", "|", "Navigation Menu (go to << MAIN MENU >> or Quit app)")
