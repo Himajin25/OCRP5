@@ -1,7 +1,14 @@
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+
 """ Constants used in the purcoco app """
 
-USER = 'root'
-PASSWORD = 'My5QL N1c0'
+USER_NAME = os.environ.get("USER")
+PASSWORD = os.environ.get("PASSWORD")
+
+print(USER_NAME, PASSWORD)
 
 
 DATABASE = "PurcocoDB"
