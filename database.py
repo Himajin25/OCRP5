@@ -9,6 +9,7 @@ class Database:
     def __init__(self):
         self.user = c.USER
         self.password = c.PASSWORD
+        # print(c.USER, c.PASSWORD)
         self.database = c.DATABASE
         self.config = {'user' : self.user, 'password' : self.password, 'database' : c.DATABASE}
         self.cnx = connect(**self.config)

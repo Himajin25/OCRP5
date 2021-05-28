@@ -36,7 +36,7 @@ The database is build from products from **OpenFoodFacts** and organized in cate
 
 5. Run **python3 init.py** to (re)build the database and populate the tables
 
-6. Run **python3 purcoco.py** to enjoy the app!
+6. Run **python3 main.py** to enjoy the app!
 
 
 ## USE:
