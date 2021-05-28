@@ -1,6 +1,7 @@
 # Welcome to **purcoco** app !
 
-With this program, you can find **healthier** substitutes to your coco products based on their nutritional scores. You can save the substitute in your favorites and check it a your convienience !
+With this program, you can find **healthier** substitutes to your coco products based on their nutritional scores. 
+You can save the substitutes in your favorites and check them out at your convienience !
 
 The database is build with products from **OpenFoodFacts** and organized in categories.
 
@@ -14,22 +15,23 @@ The database is build with products from **OpenFoodFacts** and organized in cate
 
 ## INSTALLATION :
 
-1. Clone this project from [github](https://github.com/Himajin25/OCRP5.git) or download zip file on your computer.
+1. Clone this project from [github](https://github.com/Himajin25/OCRP5.git) or download the zip file on your computer.
     (see this [cloning tutorial](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for guidance)
 
 2. Create a virtual environment with python3 :
-        - enter  '**python3 -m virtualenv purcoco**' in the terminal while in the directory you'll use;
-        - enter ' **.\Scripts\activate** '
+        - Run  **python3 -m virtualenv purcoco** in the terminal while in the directory you'll use;
+        - Run **.\Scripts\activate** 
 
-3. Enter ' **pip3 install -r requirements.txt** ' to install required modules;
+3. Enter **pip3 install -r requirements.txt** to install required modules;
     - Windows :
     - Linux :
 
-4.  1. Create a file named **.env** in your directory 
-    2. type the following on the first 2 lines: 
-    > USER='_your MySQL username_'
-    > PASSWORD='_your MySQL password_'
-    3. save your file 
+4. Store your credentials securely:
+    1. Create a file named **.env** in your directory 
+    2. Type the following on the first 2 lines: 
+        > USER='_your MySQL username_'
+        > PASSWORD='_your MySQL password_'
+    3. Save your file 
 
 5. Run **init.py** to (re)build the database and populate the tables
     - Windows :
