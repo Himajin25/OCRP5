@@ -1,22 +1,22 @@
-# Welcome to purcoco app, _your best cocompanion_ !
+# PURCOCO app, _your best cocompanion_ !
 
 With this program, you can find **healthier** substitutes to your coco products based on their nutritional scores. 
-You can save the substitutes in your favorites and check them out at your convienience !
+You can save the substitutes in your favorites and check them out later at your convienience !
 
-The database is build with products from **OpenFoodFacts** and organized in categories.
+The database is build from products from **OpenFoodFacts** and organized in categories.
 
 
-## iNSTALLATION PREREQUISITES:
+## PREREQUISITES:
 > this program was built using python 3.6.9 on WSL(Ubuntu) and MySQL 8.0
 
 - **Python 3.6.9** or more recent;
 
-- **MySQL 8.0** or more recent running and a user created with full rights on 'PurcocoDB' database
+- **MySQL 8.0** or more recent running and a user created with full rights on 'PurcocoDB' database.
 
 
 ## INSTALLATION :
 
-1. Clone this project from [github](https://github.com/Himajin25/OCRP5.git) or download the zip file on your computer.
+1. Clone this project from [github](https://github.com/Himajin25/OCRP5.git) or download the zip file on your computer.   
     (see this [cloning tutorial](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for guidance)
 
 2. Create a virtual environment with python3. 
@@ -30,7 +30,7 @@ The database is build with products from **OpenFoodFacts** and organized in cate
 4. Store your credentials securely:
     1. Create a file named **.env** in the root of your directory 
     2. Type the following on the first 2 lines: 
-        > USER='_your MySQL username_'\n
+        > USER='_your MySQL username_'   
         > PASSWORD='_your MySQL password_'
     3. Save your file 
 
