@@ -41,13 +41,13 @@ The database is build from products from **OpenFoodFacts** and organized in cate
 
 ## USE:
 
-- To select an option, enter corresponding number in terminal and press enter;
+- To select an entry in a menu, enter the corresponding number in terminal and press Enter;
 
 - Follow the instructions on the screen!
 
 ## RESET:
 
-- Your saved items list can be reset from within the app' _Favorites Menu_;_
+- Your saved items list can be reset from within the app's _Favorites Menu_
 
 - Simply rerun **python3 init.py** to rebuild the whole database from scratch;
 
