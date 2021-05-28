@@ -1,48 +1,57 @@
-Purcoco App
+# Welcome to **purcoco** app !
 
-Welcome to purcoco's application !
+With this program, you can find **healthier** substitutes to your coco products based on their nutritional scores. You can save the substitute in your favorites and check it a your convienience !
 
-With this program, you can select a coconut product and find a healthier substitute based on its nutritional score. You can save the substitute in your favorites and check it a your convienience !
-
-The database is build with products from OpenFoodFacts and organized in categories.
+The database is build with products from **OpenFoodFacts** and organized in categories.
 
 
-iNSTALLATION PREREQUISITES:
+## iNSTALLATION PREREQUISITES:
 
--> Python 3.6.9 or more recent;
+-> **Python 3.6.9** or more recent;
 
--> MySQL 8.0 or more recent running and a user created with fullrights on 'PurcocoDB' database
-
-
-INSTALLATION :
-
--> Clone this project from github (https://github.com/Himajin25/OCRP5.git) or download zip file on your computer.
-    (see https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository for guidance)
-
--> Create a virtual environment with python3 :
-        - enter  'python3 -m virtualenv purcoco ' in the terminal while in the directory you'll use;
-        - enter ' .\Scripts\activate '
-
--> Enter ' pip3 install -r requirements.txt ' to install required modules;
-
--> Edit config.py by replacing 'YourUserName' and 'YourPassword' with your own credentials between brackets;
-
--> Run init.py to (re)build the database and populate the tables;
-
--> Run purcoco.py to enjoy the app!
+-> **MySQL 8.0** or more recent running and a user created with fullrights on 'PurcocoDB' database
 
 
-USE:
+## INSTALLATION :
 
--> To select an option, enter corresponding number in terminal and press enter;
+1. Clone this project from [github](https://github.com/Himajin25/OCRP5.git) or download zip file on your computer.
+    (see this [cloning tutorial](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for guidance)
 
--> Follow the instructions on the screen!
+2. Create a virtual environment with python3 :
+        - enter  '**python3 -m virtualenv purcoco**' in the terminal while in the directory you'll use;
+        - enter ' **.\Scripts\activate** '
 
-RESET:
+3. Enter ' **pip3 install -r requirements.txt** ' to install required modules;
+    - Windows :
+    - Linux :
 
--> Your saved items list can be reset from within the app;
+4.  1. Create a file named **.env** in your directory 
+    2. type the following on the first 2 lines: 
+    > USER='_your MySQL username_'
+    > PASSWORD='_your MySQL password_'
+    3. save your file 
 
--> Simply rerun init.py to rebuild the whole database from scratch;
+5. Run **init.py** to (re)build the database and populate the tables
+    - Windows :
+    - Linux :
+
+6. Run **purcoco.py** to enjoy the app!
+    - Windows :
+    - Linux :
+
+
+
+## USE:
+
+- To select an option, enter corresponding number in terminal and press enter;
+
+- Follow the instructions on the screen!
+
+## RESET:
+
+- Your saved items list can be reset from within the app;
+
+- Simply rerun init.py to rebuild the whole database from scratch;
 
 
 

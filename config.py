@@ -8,9 +8,6 @@ import os
 USER_NAME = os.environ.get("USER")
 PASSWORD = os.environ.get("PASSWORD")
 
-print(USER_NAME, PASSWORD)
-
-
 DATABASE = "PurcocoDB"
 CATEGORIES = ["eaux de coco", "lait de coco", "huile de coco", "yaourts a la noix de coco", "sablés à la noix de coco", "chips de noix de coco séchée", "farine de noix de coco séchée", "sucres de coco"]
 TABLES = {}
