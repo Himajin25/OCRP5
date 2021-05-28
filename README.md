@@ -1,4 +1,4 @@
-# Welcome to **purcoco** app !
+# Welcome to purcoco app, _your best cocompanion_ !
 
 With this program, you can find **healthier** substitutes to your coco products based on their nutritional scores. 
 You can save the substitutes in your favorites and check them out at your convienience !
@@ -7,10 +7,11 @@ The database is build with products from **OpenFoodFacts** and organized in cate
 
 
 ## iNSTALLATION PREREQUISITES:
+> this program was built using python 3.6.9 on WSL(Ubuntu) and MySQL 8.0
 
--> **Python 3.6.9** or more recent;
+- **Python 3.6.9** or more recent;
 
--> **MySQL 8.0** or more recent running and a user created with fullrights on 'PurcocoDB' database
+- **MySQL 8.0** or more recent running and a user created with full rights on 'PurcocoDB' database
 
 
 ## INSTALLATION :
@@ -18,29 +19,24 @@ The database is build with products from **OpenFoodFacts** and organized in cate
 1. Clone this project from [github](https://github.com/Himajin25/OCRP5.git) or download the zip file on your computer.
     (see this [cloning tutorial](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for guidance)
 
-2. Create a virtual environment with python3 :
-        - Run  **python3 -m virtualenv purcoco** in the terminal while in the directory you'll use;
-        - Run **.\Scripts\activate** 
+2. Create a virtual environment with python3. 
+    1. In terminal, go to the root of of the app directory and run **python3 -m venv purcoco_venv**
+    2. Activate your virtual environment, run the following in terminal:
+        - (WINDOWS)**purcoco_venv\Scripts\activate.bat** 
+        - (UNIX) **purcoco_venv/bin/activate**
 
-3. Enter **pip3 install -r requirements.txt** to install required modules;
-    - Windows :
-    - Linux :
+3. Enter **pip install -r requirements.txt** to install required modules;
 
 4. Store your credentials securely:
-    1. Create a file named **.env** in your directory 
+    1. Create a file named **.env** in the root of your directory 
     2. Type the following on the first 2 lines: 
-        > USER='_your MySQL username_'
+        > USER='_your MySQL username_'\n
         > PASSWORD='_your MySQL password_'
     3. Save your file 
 
-5. Run **init.py** to (re)build the database and populate the tables
-    - Windows :
-    - Linux :
+5. Run **python3 init.py** to (re)build the database and populate the tables
 
-6. Run **purcoco.py** to enjoy the app!
-    - Windows :
-    - Linux :
-
+6. Run **python3 purcoco.py** to enjoy the app!
 
 
 ## USE:
@@ -51,10 +47,9 @@ The database is build with products from **OpenFoodFacts** and organized in cate
 
 ## RESET:
 
-- Your saved items list can be reset from within the app;
+- Your saved items list can be reset from within the app' _Favorites Menu_;_
 
-- Simply rerun init.py to rebuild the whole database from scratch;
-
+- Simply rerun **python3 init.py** to rebuild the whole database from scratch;
 
 
 
