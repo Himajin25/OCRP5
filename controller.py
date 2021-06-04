@@ -9,6 +9,8 @@ class Controller:
     about_main_menu = "MENU NAME"
     about_categories_menu = "CATEGORY NAME"
     about_products_display = "('PRODUCT NAME', 'BRAND', 'NUTRISCORE', 'DATABASE ID')"
+    about_favorites_display = "('CATEGORY', 'PRODUCT NAME', 'BRAND', 'NUTRISCORE', 'DATABASE ID')"
+
 
     def __init__(self):
         self.database = Database()
@@ -75,13 +77,13 @@ class Controller:
         """ Builds the favorites menu and displays saved product to user """
 
         show_favorites = self.database.display_favorites()
-        favorites_menu_init= Menu('FAVORITES MENU', self.about_products_display, show_favorites)
-        favorites_menu_init.clear_screen()
-        favorites_menu_init.display()
+        favorites_menu= Menu('FAVORITES MENU', self.about_favorites_display, show_favorites)
+        favorites_menu.clear_screen()
+        favorites_menu.display()
         while True:
             erase_favorites_prompt = input("- enter 'e' to erase your saved products;\n- enter '0' to navigate app\n").lower()
             if erase_favorites_prompt == '0':
-                favorites_menu_init.menu_navigation()
+                favorites_menu.menu_navigation()
             elif erase_favorites_prompt == 'e':
                 while True:
                     erase_favorites_confirmation = input("- You are about to erase your saved products\n - Enter 'y' to confirm\n - Enter 'n' to return to favorites\n").lower()
@@ -95,7 +97,6 @@ class Controller:
                     else: 
                         print('INVALID INPUT')
                         pass
-
             else: 
                 print("INVALID INPUT\n")
                 pass

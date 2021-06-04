@@ -143,7 +143,7 @@ class Database:
     def display_favorites(self):
         """ Displays the products saved by the user into the favorites table """
 
-        display_favorites_query = "SELECT name, brand, nutri_grade, id FROM Products INNER JOIN Favorites ON Products.id = Favorites.product_id"
+        display_favorites_query = "SELECT cat_name, name, brand, nutri_grade, id FROM Products INNER JOIN Favorites ON Products.id = Favorites.product_id"
         self.cursor.execute(display_favorites_query)
         saved_items = self.cursor.fetchall()
         return saved_items
@@ -161,9 +161,10 @@ class Database:
         """ Allows for reset of favorites table """
 
         table = c.TABLES['Favorites']
-        self.cursor.execute("DROP TABLE IF EXISTS Favorites")
+        self.cursor.execute("DELETE FROM Favorites")
+        # self.cursor.execute("DROP TABLE IF EXISTS Favorites")
         self.cursor.execute(table)
-        self.connection.commit()
+        self.cnx.commit()
         
     def end_connection(self):
         """ Terminates the connection to the server and closes the cursor """
