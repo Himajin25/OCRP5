@@ -1,4 +1,5 @@
 import sys
+from os import system, name
 
 
 class Menu:
@@ -10,9 +11,19 @@ class Menu:
         self.options = options
         self.instructions = "HOW TO USE: Choose an option, enter its corresponding number and press Enter"
 
+    def clear_screen(self):
+        """ Clears the terminal screen upon change of menu """
+
+        # for windows 
+        if name == 'nt': 
+            _ = system('cls') 
+        # for mac and linux(here, os.name is 'posix') 
+        else: 
+            _ = system('clear') 
+            
     def display(self):
         """ This method handles the appearance of the different menus """
-
+        self.clear_screen()
         print(" ", "_"*150)
         print("|"," "*150, "|")
         print("|", " "*55, f"<< {self.title} >>")
@@ -37,18 +48,17 @@ class Menu:
         except:
             ValueError, AssertionError
             print("INVALID INPUT - Try again: ")
-            return Menu.user_input(self)
+            return self.user_input()
         else :
             
             if user_choice == 0:
-                Menu.menu_navigation(self)
+                self.menu_navigation()
             else:
                 return user_choice
 
     def menu_navigation(self):
         """ This method allows to return to main menu or quit the application when user enters '0'  """
-        from utils import clear_screen
-        clear_screen()
+        self.clear_screen()
         print(" ", "_"*150)
         print("|"," "*150, "|")
         print("|", " "*55, "<< NAVIGATION MENU >>")
@@ -59,8 +69,9 @@ class Menu:
       
         if navigation == 'm':
             print('returning to main menu')
-            import utils
-            utils.app()
+            from main import main
+            main()
+           
 
         elif navigation == 'c':
             print('cancelling navigation')
@@ -73,3 +84,4 @@ class Menu:
         else:
             print('enter valid input')
             Menu.menu_navigation(self) 
+

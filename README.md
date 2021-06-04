@@ -28,11 +28,19 @@ The database is build from products from **OpenFoodFacts** and organized in cate
 3. Enter **pip install -r requirements.txt** to install required modules;
 
 4. Store your credentials securely:
-    1. Create a file named **.env** in the root of your directory 
-    2. Type the following on the first 2 lines: 
-        > USER='_your MySQL username_'   
-        > PASSWORD='_your MySQL password_'
-    3. Save your file 
+    ### Linux & MAC
+    1. In terminal, go to your home directory and open the **.bash_profile** file in any text editor of your choice. 
+    2. Add following content at the top of the file without whitespace on either side of = sign.:
+        >export USER="your_username_here"   
+        >export PASSWORD="your_password_here"  
+    3. Save your file
+    4. Run **source .bash_profile** to effect the changes.
+    ### Windows
+    1. Open Advance System Setting
+    2. Click on Environment Variables
+    3. Add user variable by clicking **New** under *user variables*
+    4. Add *Variable name* and *Variable value* and click **ok**
+    5. Click *Ok* on Environment Variables window to save changes.
 
 5. Run **python3 init.py** to (re)build the database and populate the tables
 

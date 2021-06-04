@@ -7,9 +7,8 @@ class Database:
 
 
     def __init__(self):
-        self.user = c.USER
-        self.password = c.PASSWORD
-        # print(c.USER, c.PASSWORD)
+        self.user = c.MYSQL_USER_NAME
+        self.password = c.MYSQL_PASSWORD
         self.database = c.DATABASE
         self.config = {'user' : self.user, 'password' : self.password, 'database' : c.DATABASE}
         self.cnx = connect(**self.config)
@@ -113,7 +112,7 @@ class Database:
 
 
     
-    # @staticmethod
+    
     def get_products_from_category(self, category_selection):
         """ Displays the products from the user selected category """
 
@@ -156,7 +155,7 @@ class Database:
         save_to_favorites_params = (healthy_choice_id,)
         self.cursor.execute(save_to_favorites_query, save_to_favorites_params)
         print(f"product with id {healthy_choice_id} succesfully added to favorites")
-        self.connection.commit()
+        self.cnx.commit()
 
     def erase_favorites(self):
         """ Allows for reset of favorites table """

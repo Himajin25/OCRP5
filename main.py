@@ -1,9 +1,8 @@
-import utils
-import database
+from controller import Controller
+
+def main():
+    game = Controller()
+    game.run()
 
 if __name__=='__main__':
-    purcoco = database.Database()
-
-    while True:
-        utils.app()
-        
+    main()
