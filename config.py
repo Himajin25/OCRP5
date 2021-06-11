@@ -3,9 +3,12 @@ import os
 
 MYSQL_USER_NAME = os.environ.get('USER')
 MYSQL_PASSWORD = os.environ.get('PASSWORD')
-    
+
 DATABASE = "PurcocoDB"
-CATEGORIES = ["eaux de coco", "lait de coco", "huile de coco", "yaourts a la noix de coco", "sablés à la noix de coco", "chips de noix de coco séchée", "farine de noix de coco séchée", "sucres de coco"]
+CATEGORIES = ["eaux de coco", "lait de coco", "huile de coco",
+              "yaourts a la noix de coco", "sablés à la noix de coco",
+              "chips de noix de coco séchée", "farine de noix de coco séchée", "sucres de coco"]
+
 TABLES = {}
 
 TABLES['Products'] = (
@@ -23,14 +26,14 @@ TABLES['Products'] = (
 
 TABLES['Category'] = (
     "CREATE TABLE IF NOT EXISTS `Category` ("
-	"   `id` SMALLINT NOT NULL,"
-	"   `name` varchar(100) NOT NULL,"
-	"   PRIMARY KEY (`id`)"
+    "   `id` SMALLINT NOT NULL,"
+    "   `name` varchar(100) NOT NULL,"
+    "   PRIMARY KEY (`id`)"
     ") ENGINE=INNODB")
 
 TABLES['Favorites'] = (
     "CREATE TABLE IF NOT EXISTS `Favorites` ("
-	"   `product_id` SMALLINT NOT NULL,"
+    "   `product_id` SMALLINT NOT NULL,"
     "   PRIMARY KEY (`product_id`),"
     "   CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES Products (id)"
     ") ENGINE=INNODB")

@@ -2,15 +2,15 @@ import config as c
 from mysql.connector import connect, Error, errorcode
 import requests
 
+
 class Database:
     """ Class that handles all database operations """
-
 
     def __init__(self):
         self.user = c.MYSQL_USER_NAME
         self.password = c.MYSQL_PASSWORD
         self.database = c.DATABASE
-        self.config = {'user' : self.user, 'password' : self.password, 'database' : c.DATABASE}
+        self.config = {'user': self.user, 'password': self.password, 'database': c.DATABASE}
         self.cnx = connect(**self.config)
         self.cursor = self.cnx.cursor(buffered=True)
 
@@ -18,15 +18,15 @@ class Database:
         """ Connects to MySQL server while checking user name and password for errors  """
 
         try:
-            config = {'user' : self.user, 'password' : self.password}
+            config = {'user': self.user, 'password': self.password}
             cnx = connect(**config)
             self.connection = cnx
             self.cursor = cnx.cursor(buffered=True)
         except Error as e:
             if e.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print ('Something is wrong with your user name or password')
+                print('Something is wrong with your user name or password')
             else:
-                print (e)
+                print(e)
         else:
             print(f'{self.user} connected succesfully to MYSQL and {c.DATABASE} database')
 
@@ -35,18 +35,18 @@ class Database:
 
         create_db_query = f"CREATE DATABASE IF NOT EXISTS {c.DATABASE} DEFAULT CHARACTER SET utf8mb4"
         use_db_query = f"USE {c.DATABASE}"
-        try: 
+        try:
             self.cursor.execute(create_db_query)
             print(f"db {c.DATABASE} created succesfully")
         except Error as e:
             print(f"DB {c.DATABASE} creation failed")
             print(e)
-        else : 
+        else:
             self.cursor.execute(use_db_query)
             print(f"db {c.DATABASE} selected")
             self.connection.commit()
             print("changes committed")
-        
+
     def build_tables(self):
         """ Build the tables from the TABLES dictionary in the constants.py file """
 
@@ -60,13 +60,13 @@ class Database:
             table = c.TABLES[table_name]
             self.cursor.execute(table)
             print('table {} created'.format(table_name))
-    
+
     def fetch_data(self):
         """ Fetches the data for the tables from the openfood facts API """
 
         products_list_data = []
         for category in c.CATEGORIES:
-            url= 'https://fr.openfoodfacts.org/cgi/search.pl?'
+            url = 'https://fr.openfoodfacts.org/cgi/search.pl?'
             params = {
                 "action": "process",
                 "tagtype_0": "categories",
@@ -88,31 +88,28 @@ class Database:
                     nutrition_grades = text["products"][i]["nutrition_grade_fr"]
                     url = text["products"][i]["url"]
                     keys = [code, cat_name, name, brand, stores, nutrition_grades, url]
-                    for key in keys: 
+                    for key in keys:
                         assert len(str(key)) > 0
-                except:
-                    (KeyError, AssertionError)
+                except (KeyError, AssertionError):
                     pass
 
-                else: 
+                else:
                     products_list_data.append((code, cat_name, name, brand, stores, nutrition_grades, url))
-                    
+
         return products_list_data
 
     def populate_tables(self, data):
         """ Uses the fetched data and inserts it in the tables """
 
         cat_data = list(enumerate(c.CATEGORIES, 1))
-        feed_products_query = "INSERT IGNORE INTO Products (code, cat_name, name, brand, stores, nutri_grade, url) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        feed_categories_query =  "INSERT IGNORE INTO Category (id, name) VALUES (%s, %s)"
+        feed_products_query = "INSERT IGNORE INTO Products (code, cat_name, name, brand, stores, nutri_grade, url)\
+                                 VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        feed_categories_query = "INSERT IGNORE INTO Category (id, name) VALUES (%s, %s)"
         self.cursor.executemany(feed_products_query, data)
         self.cursor.executemany(feed_categories_query, cat_data)
         self.connection.commit()
         print('tables populating succesfully completed')
 
-
-    
-    
     def get_products_from_category(self, category_selection):
         """ Displays the products from the user selected category """
 
@@ -121,7 +118,7 @@ class Database:
         self.cursor.execute(show_products_query, show_products_params)
         products_selection = self.cursor.fetchall()
         return products_selection
-    
+
     def get_healthier_products(self, selected_product_id):
         """ Proposes healthier alternatives compared to the user selected product """
 
@@ -133,17 +130,18 @@ class Database:
         product_category = product_nutri_and_category[1]
         print(f"Your product nutriscore  is << {product_nutri} >> and its category is << {product_category} >>")
 
-        show_healthier_query = "SELECT name, brand, nutri_grade, id FROM Products where cat_name = %s and nutri_grade < %s ORDER BY nutri_grade"
+        show_healthier_query = "SELECT name, brand, nutri_grade, id FROM Products where cat_name = %s \
+                                and nutri_grade < %s ORDER BY nutri_grade"
         show_healthier_params = (product_category, product_nutri)
         self.cursor.execute(show_healthier_query, show_healthier_params)
         healthier_products = self.cursor.fetchall()
         return healthier_products
 
-
     def display_favorites(self):
         """ Displays the products saved by the user into the favorites table """
 
-        display_favorites_query = "SELECT cat_name, name, brand, nutri_grade, id FROM Products INNER JOIN Favorites ON Products.id = Favorites.product_id"
+        display_favorites_query = "SELECT cat_name, name, brand, nutri_grade, id FROM Products\
+                                     INNER JOIN Favorites ON Products.id = Favorites.product_id"
         self.cursor.execute(display_favorites_query)
         saved_items = self.cursor.fetchall()
         return saved_items
@@ -165,10 +163,9 @@ class Database:
         # self.cursor.execute("DROP TABLE IF EXISTS Favorites")
         self.cursor.execute(table)
         self.cnx.commit()
-        
+
     def end_connection(self):
         """ Terminates the connection to the server and closes the cursor """
         self.cursor.close()
         self.connection.close()
         print('connection terminated')
-            

@@ -1,16 +1,16 @@
-from os import system, name
 from database import Database
 from menu import Menu
 import config as c
 import time
 
+
 class Controller:
+
     main_menu = ['Search Product to Replace', 'View Saved Products']
     about_main_menu = "MENU NAME"
     about_categories_menu = "CATEGORY NAME"
     about_products_display = "('PRODUCT NAME', 'BRAND', 'NUTRISCORE', 'DATABASE ID')"
     about_favorites_display = "('CATEGORY', 'PRODUCT NAME', 'BRAND', 'NUTRISCORE', 'DATABASE ID')"
-
 
     def __init__(self):
         self.database = Database()
@@ -36,7 +36,7 @@ class Controller:
         """ Builds the products menu and handles user input """
 
         show_products = self.database.get_products_from_category(category_selection)
-        products_menu = Menu("PRODUCTS MENU",self.about_products_display, show_products)
+        products_menu = Menu("PRODUCTS MENU", self.about_products_display, show_products)
         products_menu.clear_screen()
         products_menu.display()
         product_selection = int(products_menu.user_input())
@@ -64,12 +64,13 @@ class Controller:
     def save_to_favorites_menu(self, healthy_choice_id):
         """ Displays prompt for user to choose and confirm whether to save healthier product to favorites table """
 
-        save_to_favorites_prompt = input("Save to your favorites?\n - Enter 'y' to add to favorites;\n - Enter 'n' to go back to selection;\n").lower()
+        save_to_favorites_prompt = input("\nSave to your favorites?\n- Enter 'y' to add to favorites;\n"
+                                         "- Enter 'n' to go back to selection;\n").lower()
         if save_to_favorites_prompt == "y":
             self.database.save_to_favorites(healthy_choice_id)
         elif save_to_favorites_prompt == "n":
             pass
-        else :
+        else:
             print("INVALID INPUT\nEnter 'y' or 'n'")
             self.save_to_favorites_menu(healthy_choice_id)
 
@@ -77,16 +78,19 @@ class Controller:
         """ Builds the favorites menu and displays saved product to user """
 
         show_favorites = self.database.display_favorites()
-        favorites_menu= Menu('FAVORITES MENU', self.about_favorites_display, show_favorites)
+        favorites_menu = Menu('FAVORITES MENU', self.about_favorites_display, show_favorites)
         favorites_menu.clear_screen()
         favorites_menu.display()
         while True:
-            erase_favorites_prompt = input("- enter 'e' to erase your saved products;\n- enter '0' to navigate app\n").lower()
+            erase_favorites_prompt = input("- enter 'e' to erase your saved products;\n"
+                                           "- enter '0' to navigate app\n").lower()
             if erase_favorites_prompt == '0':
                 favorites_menu.menu_navigation()
             elif erase_favorites_prompt == 'e':
                 while True:
-                    erase_favorites_confirmation = input("- You are about to erase your saved products\n - Enter 'y' to confirm\n - Enter 'n' to return to favorites\n").lower()
+                    erase_favorites_confirmation = input("- You are about to erase your saved products\n"
+                                                         "- Enter 'y' to confirm\n"
+                                                         "- Enter 'n' to return to favorites\n").lower()
                     if erase_favorites_confirmation == 'y':
                         self.database.erase_favorites()
                         print("< Favorites > erased, resest completed")
@@ -94,10 +98,10 @@ class Controller:
                     elif erase_favorites_confirmation == 'n':
                         print(" reset cancelled... returning to << FAVORITES MENU >>")
                         return self.favorites_menu()
-                    else: 
+                    else:
                         print('INVALID INPUT')
                         pass
-            else: 
+            else:
                 print("INVALID INPUT\n")
                 pass
 
@@ -109,7 +113,7 @@ class Controller:
         choosen_replacement = self.healthy_menu(choosen_product)
         self.save_to_favorites_menu(choosen_replacement)
 
-    def run(self): 
+    def run(self):
 
         while True:
 
@@ -119,4 +123,3 @@ class Controller:
                 self.replace_item()
             elif user_choice == 2:
                 self.favorites_menu()
-    

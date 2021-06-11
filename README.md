@@ -19,22 +19,22 @@ The database is build from products from **OpenFoodFacts** and organized in cate
 1. Clone this project from [github](https://github.com/Himajin25/OCRP5.git) or download the zip file on your computer.   
     (see this [cloning tutorial](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for guidance)
 
-2. Create a virtual environment with python3. 
-    1. In terminal, go to the root of of the app directory and run **python3 -m venv purcoco_venv**
-    2. Activate your virtual environment, run the following in terminal:
-        - (WINDOWS)**purcoco_venv\Scripts\activate.bat** 
+2. Create a virtual environment with python3: 
+    1. In terminal, go to the root of of the app directory and run **python3** **-m venv purcoco_venv**
+    2. Activate your virtual environment by running the following in terminal:
+        - (WINDOWS) **purcoco_venv\Scripts\activate.bat** 
         - (UNIX) **purcoco_venv/bin/activate**
 
 3. Enter **pip install -r requirements.txt** to install required modules;
 
-4. Store your credentials securely:
+4. Store your credentials securely in environment variables:
     ### Linux & MAC
     1. In terminal, go to your home directory and open the **.bash_profile** file in any text editor of your choice. 
     2. Add following content at the top of the file without whitespace on either side of = sign.:
         >export USER="your_username_here"   
         >export PASSWORD="your_password_here"  
     3. Save your file
-    4. Run **source .bash_profile** to effect the changes.
+    4. Run **source** **.bash_profile** to effect the changes.
     ### Windows
     1. Open Advance System Setting
     2. Click on Environment Variables
@@ -42,9 +42,9 @@ The database is build from products from **OpenFoodFacts** and organized in cate
     4. Add *Variable name* and *Variable value* and click **ok**
     5. Click *Ok* on Environment Variables window to save changes.
 
-5. Run **python3 init.py** to (re)build the database and populate the tables
+5. Run **python3** **init.py** to (re)build the database and populate the tables
 
-6. Run **python3 main.py** to enjoy the app!
+6. Run **python3** **main.py** to enjoy the app!
 
 
 ## USE:
