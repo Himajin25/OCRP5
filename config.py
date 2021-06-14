@@ -5,9 +5,10 @@ MYSQL_USER_NAME = os.environ.get('USER')
 MYSQL_PASSWORD = os.environ.get('PASSWORD')
 
 DATABASE = "PurcocoDB"
-CATEGORIES = ["eaux de coco", "lait de coco", "huile de coco",
-              "yaourts a la noix de coco", "sablés à la noix de coco",
-              "chips de noix de coco séchée", "farine de noix de coco séchée", "sucres de coco"]
+
+CATEGORIES = ['Eaux De Coco', 'Lait De Coco', 'Huile De Coco',
+              'Yaourts A La Noix De Coco', 'Sablés À La Noix De Coco',
+              'Chips De Noix De Coco Séchée', 'Farine De Noix De Coco Séchée', 'Sucres De Coco']
 
 TABLES = {}
 

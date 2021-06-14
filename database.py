@@ -1,6 +1,9 @@
 import config as c
 from mysql.connector import connect, Error, errorcode
 import requests
+""" File handling connexion to server,
+    initiation of database, creation of tables, 
+    data gathering from the API and the database commands """
 
 
 class Database:
@@ -48,7 +51,7 @@ class Database:
             print("changes committed")
 
     def build_tables(self):
-        """ Build the tables from the TABLES dictionary in the constants.py file """
+        """ Builds the tables from the TABLES dictionary in the constants.py file """
 
         for table_name in c.TABLES:
             self.cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
@@ -82,14 +85,16 @@ class Database:
                 try:
                     cat_name = category
                     code = text["products"][i]["code"]
-                    name = text["products"][i]["product_name"]
-                    brand = text["products"][i]["brands"]
-                    stores = text["products"][i]["stores"]
+                    name = text["products"][i]["product_name"].split(",")[0]
+                    brand = text["products"][i]["brands"].split(",")[0]
+                    stores = text["products"][i]["stores"].split(",")[0]
                     nutrition_grades = text["products"][i]["nutrition_grade_fr"]
                     url = text["products"][i]["url"]
                     keys = [code, cat_name, name, brand, stores, nutrition_grades, url]
                     for key in keys:
                         assert len(str(key)) > 0
+                        key = key.split(",")
+                        key = key[0]
                 except (KeyError, AssertionError):
                     pass
 
@@ -110,10 +115,18 @@ class Database:
         self.connection.commit()
         print('tables populating succesfully completed')
 
-    def get_products_from_category(self, category_selection):
-        """ Displays the products from the user selected category """
+    def get_categories(self):
+        """ Returns the categories """
 
-        show_products_query = "SELECT name, brand, nutri_grade, id FROM Products where cat_name = %s"
+        show_categories_query = "SELECT name FROM Category"
+        self.cursor.execute(show_categories_query, )
+        categories = self.cursor.fetchall()
+        return categories
+
+    def get_products_from_category(self, category_selection):
+        """ Returns the products from the user selected category """
+
+        show_products_query = "SELECT name, brand, stores, id, nutri_grade FROM Products where cat_name = %s"
         show_products_params = (c.CATEGORIES[category_selection-1],)
         self.cursor.execute(show_products_query, show_products_params)
         products_selection = self.cursor.fetchall()
@@ -130,7 +143,7 @@ class Database:
         product_category = product_nutri_and_category[1]
         print(f"Your product nutriscore  is << {product_nutri} >> and its category is << {product_category} >>")
 
-        show_healthier_query = "SELECT name, brand, nutri_grade, id FROM Products where cat_name = %s \
+        show_healthier_query = "SELECT name, brand, stores, id, nutri_grade FROM Products where cat_name = %s \
                                 and nutri_grade < %s ORDER BY nutri_grade"
         show_healthier_params = (product_category, product_nutri)
         self.cursor.execute(show_healthier_query, show_healthier_params)
@@ -140,7 +153,7 @@ class Database:
     def display_favorites(self):
         """ Displays the products saved by the user into the favorites table """
 
-        display_favorites_query = "SELECT cat_name, name, brand, nutri_grade, id FROM Products\
+        display_favorites_query = "SELECT name, brand, cat_name, stores, nutri_grade FROM Products\
                                      INNER JOIN Favorites ON Products.id = Favorites.product_id"
         self.cursor.execute(display_favorites_query)
         saved_items = self.cursor.fetchall()
@@ -160,7 +173,6 @@ class Database:
 
         table = c.TABLES['Favorites']
         self.cursor.execute("DELETE FROM Favorites")
-        # self.cursor.execute("DROP TABLE IF EXISTS Favorites")
         self.cursor.execute(table)
         self.cnx.commit()
 

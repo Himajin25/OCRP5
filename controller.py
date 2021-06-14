@@ -1,21 +1,23 @@
 from database import Database
 from menu import Menu
-import config as c
 import time
+""" File handling the interactions between the the user, the user interface (Menu) and the database  """
 
 
 class Controller:
+    """ Class handling user inputs and """
 
-    main_menu = ['Search Product to Replace', 'View Saved Products']
-    about_main_menu = "MENU NAME"
-    about_categories_menu = "CATEGORY NAME"
-    about_products_display = "('PRODUCT NAME', 'BRAND', 'NUTRISCORE', 'DATABASE ID')"
-    about_favorites_display = "('CATEGORY', 'PRODUCT NAME', 'BRAND', 'NUTRISCORE', 'DATABASE ID')"
+    main_menu = [('Search Product to Replace',), ('View Saved Products',)]
+    about_main_menu = ("MENU NAME",)
+    about_categories_menu = ("CATEGORY NAME",)
+    about_products_display = ('PRODUCT NAME', 'BRAND', 'STORES', 'DATABASE ID', 'NUTRISCORE')
+    about_favorites_display = ('PRODUCT NAME', 'BRAND', 'CATEGORY', 'STORES', 'NUTRISCORE')
 
     def __init__(self):
         self.database = Database()
 
     def title_menu(self):
+        """ Builds the main menu """
 
         title_menu = Menu("MAIN MENU", self.about_main_menu, self.main_menu)
         title_menu.clear_screen()
@@ -26,7 +28,8 @@ class Controller:
     def categories_menu(self):
         """ Builds the category menu and handles the user input """
 
-        categories_menu = Menu("CATEGORIES MENU", self.about_categories_menu, c.CATEGORIES)
+        show_categories = self.database.get_categories()
+        categories_menu = Menu("CATEGORIES MENU", self.about_categories_menu, show_categories)
         categories_menu.clear_screen()
         categories_menu.display()
         category_selection = categories_menu.user_input()
@@ -52,13 +55,13 @@ class Controller:
         healthier_menu.clear_screen()
         healthier_menu.display()
         if len(show_healthier_products) == 0:
-            print("No better option found")
+            print("No better option available, returning to main menu")
             time.sleep(4)
             healthier_menu.menu_navigation()
         else:
             healthy_choice = healthier_menu.user_input()
             healthy_choice_id = show_healthier_products[healthy_choice-1][3]
-            print("You selected ", show_healthier_products[healthy_choice-1])
+            print(show_healthier_products[healthy_choice-1], "selected")
             return healthy_choice_id
 
     def save_to_favorites_menu(self, healthy_choice_id):
@@ -114,6 +117,7 @@ class Controller:
         self.save_to_favorites_menu(choosen_replacement)
 
     def run(self):
+        """ Launches the app """
 
         while True:
 

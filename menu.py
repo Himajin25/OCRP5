@@ -1,9 +1,10 @@
 import sys
 from os import system, name
+""" File configuring the visual parts of the app and prompting the user for input """
 
 
 class Menu:
-    """ Class that handles the user interface, allows for user to navigate menus """
+    """ Class that handles the user interface and allows for user to navigate the menus """
 
     def __init__(self, title, about, options):
         self.title = title
@@ -30,12 +31,12 @@ class Menu:
         print("|", " "*30, f"{self.instructions}")
         print("|", "_"*150, "|")
         print("|", " "*150, "|")
-        print("|", "0", "|", "Navigation Menu (go to << MAIN MENU >> or Quit app)")
+        print(self.first_column("0"), "Navigation Menu (go to << MAIN MENU >> or Quit app)")
         print("|", "="*150, "|")
-        print("|", " ", "|", f"{self.about}")
+        print(self.first_column(" "), self.columns(self.about))
         for i, r in enumerate(self.options, 1):
             print("|", "-"*150, "|")
-            print("|", i, "|", r)
+            print(self.first_column(i), self.columns(r))
         print("|", "_"*150, "|")
 
     def user_input(self):
@@ -45,11 +46,12 @@ class Menu:
             print()
             user_choice = int(input("What is your selection?\n( Enter 0 to navigate app ) \n"))
             assert user_choice in range(len(self.options)+1)
+
         except (ValueError, AssertionError):
             print("INVALID INPUT - Try again: ")
             return self.user_input()
-        else:
 
+        else:
             if user_choice == 0:
                 self.menu_navigation()
             else:
@@ -57,6 +59,7 @@ class Menu:
 
     def menu_navigation(self):
         """ This method allows to return to main menu or quit the application when user enters '0'  """
+
         self.clear_screen()
         print(" ", "_"*150)
         print("|", " "*150, "|")
@@ -78,3 +81,22 @@ class Menu:
         else:
             print('enter valid input')
             Menu.menu_navigation(self)
+
+    def columns(self, entry):
+        """ Method setting column widths  """
+
+        row = ''
+        for i in range(len(entry)):
+            if i == 0:
+                column = f"{entry[i]:^50}|"
+            elif i == len(entry)-1:
+                column = f"{entry[i]:^10}"
+            else:
+                column = f"{entry[i]:^25}|"
+            row += column
+        return row
+
+    def first_column(self, number):
+        """ Methods setting the width for the numbered column """
+        
+        return f"| {number:^3}|"

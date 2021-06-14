@@ -1,4 +1,4 @@
-# PURCOCO app, _your best cocompanion_ !
+# PURCOCO, _your best **coco**mpanion_ !
 
 With this program, you can find **healthier** substitutes to your coco products based on their nutritional scores. 
 You can save the substitutes in your favorites and check them out later at your convienience !
@@ -42,9 +42,9 @@ The database is build from products from **OpenFoodFacts** and organized in cate
     4. Add *Variable name* and *Variable value* and click **ok**
     5. Click *Ok* on Environment Variables window to save changes.
 
-5. Run **python3** **init.py** to (re)build the database and populate the tables
+5. Run **python3 init<area>.py** to (re)build the database and populate the tables
 
-6. Run **python3** **main.py** to enjoy the app!
+6. Run **python3 main<area>.py** to enjoy the app!
 
 
 ## USE:
@@ -57,7 +57,7 @@ The database is build from products from **OpenFoodFacts** and organized in cate
 
 - Your saved items list can be reset from within the app's _Favorites Menu_
 
-- Simply rerun **python3 init.py** to rebuild the whole database from scratch;
+- Simply rerun **python3 init<area>.py** to rebuild the whole database from scratch;
 
 
 
